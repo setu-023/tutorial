@@ -39,9 +39,6 @@ def api_root(request, format=None):
     })
 
 
-
-
-
 class SnippetList(generics.ListCreateAPIView):
     queryset = Snippet.objects.all()
     serializer_class = SnippetSerializer
@@ -59,25 +56,18 @@ def sqr_number(request,pk):
     return JsonResponse(val,safe=False)
 
 
+def test_route(request,pk):
+    #html = "homepage.html"
+    val = pk
+    if val > 5 :
+        return HttpResponseRedirect(redirect_to='http://127.0.0.1:8000/snippets')
 
-
-def test_route(request):
-    html = "homepage.html"
-    #if pk == 3:
-    #return redirect('homepage/')
-    #return render(request,html)
     return HttpResponseRedirect(redirect_to='http://127.0.0.1:8000/homepage')
-
 
 
 def homepage(request):
     html =  "homepage.html"
     return render (request,html)
-
-
-
-
-
 
 
 class SnippetDetail(generics.RetrieveUpdateDestroyAPIView):

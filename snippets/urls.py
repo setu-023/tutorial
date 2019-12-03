@@ -9,9 +9,8 @@ urlpatterns = [
          views.SnippetHighlight.as_view(), name='snippet-highlight'), # new
     path('users/', views.UserList.as_view(), name='user-list'),
     path('users/<int:pk>/', views.UserDetail.as_view(), name='user-detail'),
-
     path('calculation/<int:pk>/', views.sqr_number),
-    path('test/', views.test_route),
+    path('test/<int:pk>/', views.test_route),
     path('homepage/', views.homepage),
     path('', views.api_root),
 ]
