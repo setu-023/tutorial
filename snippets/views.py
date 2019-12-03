@@ -1,7 +1,10 @@
 from django.contrib.auth.models import User
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
+from django.http import HttpResponseRedirect
 
+
+from rest_framework.routers import DefaultRouter
 from rest_framework import generics, permissions, renderers # new
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -20,12 +23,23 @@ class SnippetHighlight(generics.GenericAPIView): # new
         return Response(snippet.highlighted)
 
 
+'''
+class sqr_number(generics.ListAPIView): # new
+    def cal(request,pk):
+        val = pk * pk
+    serializer_class = UserSerializer
+'''
+
+
 @api_view(['GET']) # new
 def api_root(request, format=None):
     return Response({
         'users': reverse('user-list', request=request, format=format),
         'snippets': reverse('snippet-list', request=request, format=format)
     })
+
+
+
 
 
 class SnippetList(generics.ListCreateAPIView):
@@ -42,12 +56,27 @@ def sqr_number(request,pk):
     #for i in range (num,10):
         #if num < 10:
     val = num * num
-
-
-#    html ="homepage.html"
-#    return render (request,html)
-    #print(val)
     return JsonResponse(val,safe=False)
+
+
+
+
+def test_route(request):
+    html = "homepage.html"
+    #if pk == 3:
+    #return redirect('homepage/')
+    #return render(request,html)
+    return HttpResponseRedirect(redirect_to='http://127.0.0.1:8000/homepage')
+
+
+
+def homepage(request):
+    html =  "homepage.html"
+    return render (request,html)
+
+
+
+
 
 
 
@@ -56,8 +85,6 @@ class SnippetDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = SnippetSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly,) # new
-
-
 
 class UserList(generics.ListAPIView): # new
     queryset = User.objects.all()

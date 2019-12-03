@@ -11,7 +11,8 @@ urlpatterns = [
     path('users/<int:pk>/', views.UserDetail.as_view(), name='user-detail'),
 
     path('calculation/<int:pk>/', views.sqr_number),
-
+    path('test/', views.test_route),
+    path('homepage/', views.homepage),
     path('', views.api_root),
 ]
 
